@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserTypeTable extends Migration
+class CreateQuizsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateUserTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_type', function (Blueprint $table) {
-            $table->increments('user_type_id')->unsigned();
-            $table->string('type');
+        Schema::create('quizs', function (Blueprint $table) {
+            $table->increments('quiz_id')->unsigned();
+            $table->text('quiz');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateUserTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_type');
+        Schema::dropIfExists('quizs');
     }
 }
