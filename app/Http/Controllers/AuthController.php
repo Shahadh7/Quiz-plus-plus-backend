@@ -67,7 +67,6 @@ class AuthController extends Controller
             'message' => 'success',
             'token' => $token,
             'user_type' => $user->user_type,
-            ''
         ];
     
         return response($response,200);
