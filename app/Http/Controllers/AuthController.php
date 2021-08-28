@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RandomNumber;
 use Illuminate\Http\Request;
 use Illuminate\Http\Client\Response;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Nette\Utils\Random;
 
 class AuthController extends Controller
 {
@@ -20,14 +22,21 @@ class AuthController extends Controller
             'user_type' => 'required|numeric|min:1|max:3',
         ]);
         
-        $randomSalt = \config('salt.salt');
+        $randomSalt = Random::generate(20,"a-z0-9A-Z");
         $saltedPassword = $randomSalt . $data['password'];
+
+        // dd(['araay' => strval($randomSalt)]);
 
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($saltedPassword),
             'user_type' => $data['user_type']
+        ]);
+
+        RandomNumber::create([
+            'random' => $randomSalt,
+            'user_id' => $user['id']
         ]);
 
         $token = $user->createToken('myauthtoken')->plainTextToken;
@@ -50,9 +59,9 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         $password = strval($request->password);
-        $randomSalt = \config('salt.salt');
+        $randomSalt = RandomNumber::where('user_id',$user->id)->first();
 
-        $passwordNew =  $randomSalt . $password ;
+        $passwordNew =  $randomSalt->random . $password ;
 
         if (! $user || ! Hash::check($passwordNew, $user->password)) {
             throw ValidationException::withMessages([

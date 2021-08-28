@@ -14,9 +14,9 @@ class CreateExamsTable extends Migration
     public function up()
     {
         Schema::create('exams', function (Blueprint $table) {
-            $table->increments('exams_id')->unsigned();
+            $table->id();
             $table->string('exam_name');
-            $table->integer('subject_id')->unsigned();
+            $table->bigInteger('subject_id')->unsigned();
             $table->string('exam_secret')->unique();
             $table->time('duration');
             $table->date('date');
@@ -25,7 +25,7 @@ class CreateExamsTable extends Migration
         });
 
         Schema::table('exams', function ($table) {
-            $table->foreign('subject_id')->references('subject_id')->on('subjects');
+            $table->foreign('subject_id')->references('id')->on('subjects');
         });
 
 

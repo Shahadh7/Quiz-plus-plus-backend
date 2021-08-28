@@ -16,13 +16,15 @@ class CreateAnswersTable extends Migration
         Schema::create('answers', function (Blueprint $table) {
             $table->increments('answer_id')->unsigned();
             $table->text('answer');
-            $table->integer('quiz_id')->unsigned();
+            $table->bigInteger('quiz_id')->unsigned();
+            $table->bigInteger('exam_id')->unsigned();
             $table->boolean('is_answer');
             $table->timestamps();
         });
 
         Schema::table('answers', function($table) {
-            $table->foreign('quiz_id')->references('quiz_id')->on('quizs');
+            $table->foreign('quiz_id')->references('id')->on('quizs');
+            $table->foreign('exam_id')->references('id')->on('exams');
         });
     }
 

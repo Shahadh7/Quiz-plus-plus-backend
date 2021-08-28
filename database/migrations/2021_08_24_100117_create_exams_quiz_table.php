@@ -13,15 +13,16 @@ class CreateExamsQuizTable extends Migration
      */
     public function up()
     {
-        Schema::create('exams_quiz', function (Blueprint $table) {
-            $table->integer('exam_id')->unsigned();
-            $table->integer('quiz_id')->unsigned();
+        Schema::create('exam_quiz', function (Blueprint $table) {
+            $table->bigInteger('exam_id')->unsigned();
+            $table->bigInteger('quiz_id')->unsigned();
+            
             $table->timestamps();
         });
         
-        Schema::table('exams_quiz', function ($table) {
-            $table->foreign('exam_id')->references('exams_id')->on('exams');
-            $table->foreign('quiz_id')->references('quiz_id')->on('quizs');
+        Schema::table('exam_quiz', function ($table) {
+            $table->foreign('exam_id')->references('id')->on('exams');
+            $table->foreign('quiz_id')->references('id')->on('quizs');
         });
     }
 
