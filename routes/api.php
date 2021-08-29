@@ -32,4 +32,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/subjects/create', [SubjectController::class, 'create']);
     Route::put('/subjects/{id}', [SubjectController::class, 'update']);
     Route::delete('/subjects/{id}', [SubjectController::class, 'destroy']);
+
+    Route::post('/exams/create',[ExamController::class, 'create']);
 });
