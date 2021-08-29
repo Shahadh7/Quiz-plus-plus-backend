@@ -25,7 +25,7 @@ class CreateExamsTable extends Migration
         });
 
         Schema::table('exams', function ($table) {
-            $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
         });
 
 

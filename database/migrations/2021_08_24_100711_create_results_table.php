@@ -22,8 +22,8 @@ class CreateResultsTable extends Migration
         });
 
         Schema::table('results', function($table) {
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('exams_id')->references('id')->on('exams');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('exams_id')->references('id')->on('exams')->onDelete('cascade');
         });
     }
 

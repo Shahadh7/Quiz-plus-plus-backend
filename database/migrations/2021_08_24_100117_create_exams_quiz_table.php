@@ -21,8 +21,8 @@ class CreateExamsQuizTable extends Migration
         });
         
         Schema::table('exam_quiz', function ($table) {
-            $table->foreign('exam_id')->references('id')->on('exams');
-            $table->foreign('quiz_id')->references('id')->on('quizs');
+            $table->foreign('exam_id')->references('id')->on('exams')->onDelete('cascade');
+            $table->foreign('quiz_id')->references('id')->on('quizs')->onDelete('cascade');
         });
     }
 

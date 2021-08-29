@@ -20,7 +20,7 @@ class CreateRandomNumbersTable extends Migration
             $table->timestamps();
         });
         Schema::table('random_numbers', function($table){
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

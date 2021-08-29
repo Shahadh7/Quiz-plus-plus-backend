@@ -18,7 +18,7 @@ class AddUserTypeToUsersTable extends Migration
         });
 
         Schema::table('users', function ($table) {
-            $table->foreign('user_type')->references('id')->on('user_type');
+            $table->foreign('user_type')->references('id')->on('user_type')->onDelete('cascade');
         });
 
         

@@ -23,8 +23,8 @@ class CreateAnswersTable extends Migration
         });
 
         Schema::table('answers', function($table) {
-            $table->foreign('quiz_id')->references('id')->on('quizs');
-            $table->foreign('exam_id')->references('id')->on('exams');
+            $table->foreign('quiz_id')->references('id')->on('quizs')->onDelete('cascade');
+            $table->foreign('exam_id')->references('id')->on('exams')->onDelete('cascade');
         });
     }
 
