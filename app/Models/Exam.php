@@ -18,6 +18,8 @@ class Exam extends Model
         'duration',
         'date',
         'time',
+        'user_id',
+        'slug'
     ];
 
     protected $hidden = [
