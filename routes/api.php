@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\SayingController;
 use App\Http\Controllers\SubjectController;
 use Illuminate\Http\Request;
@@ -23,9 +24,8 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/subjects', [SubjectController::class, 'view']);
 
-Route::get('/exams/{id}',[ExamController::class, 'view']);
+Route::get('/exams/{id?}',[ExamController::class, 'view']);
 Route::get('/sayings',[SayingController::class, 'view']);
-
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -34,4 +34,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/subjects/{id}', [SubjectController::class, 'destroy']);
 
     Route::post('/exams/create',[ExamController::class, 'create']);
+    Route::delete('/exams/{id}', [ExamController::class, 'destroy']);
+
+    Route::put('/quizs/{id}', [QuizController::class, 'update']);
+
+    
 });
