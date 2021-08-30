@@ -19,6 +19,7 @@ class CreateExamsTable extends Migration
             $table->bigInteger('subject_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
             $table->string('exam_secret')->unique();
+            $table->bigInteger('level_id')->unsigned();
             $table->string('duration');
             $table->string('slug');
             $table->string('date');
