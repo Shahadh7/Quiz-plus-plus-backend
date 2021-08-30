@@ -30,4 +30,9 @@ class Exam extends Model
     public function quizs() {
         return $this->belongsToMany(Quiz::class);
     }
+
+    public function levels() {
+        return $this->belongsTo(Level::class);
+    }
+    
 }

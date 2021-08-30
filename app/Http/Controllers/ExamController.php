@@ -72,10 +72,26 @@ class ExamController extends Controller
     }
     public function view(Request $request,$id=null) {
 
-        if(is_null($id)) {
+        if($request->input('level') && $request->input('subjects')) {
+            
+            $level = $request->input("level");
+            $subjects = $request->input("subjects");
+            $exam = Exam::where('level_id',$level)->whereIn('subject_id', $subjects)->get();
+            return response($exam->toArray());
+        }else if($request->input('level') && !$request->input('subjects')){
+            $level = $request->input("level");
+            $exam = Exam::where('level_id',$level)->get();
+            return response($exam->toArray());
+        }
+        else if(!$request->input('level') && $request->input('subjects')){
+            $subjects = $request->input("subjects");
+            $exam = Exam::whereIn('subject_id', $subjects)->get();
+            return response($exam->toArray());
+        }
+        else if(is_null($id)) {
             return response([
                 "message" => 'success',
-                "exams" => Exam::get()
+                "exams" => Exam::with('levels')->get()
             ]);
         }
 

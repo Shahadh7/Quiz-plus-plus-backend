@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\LevelController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\SayingController;
 use App\Http\Controllers\SubjectController;
@@ -23,6 +24,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/subjects', [SubjectController::class, 'view']);
+Route::get('/levels', [LevelController::class, 'view']);
 
 Route::get('/exams/{id?}',[ExamController::class, 'view']);
 Route::get('/sayings',[SayingController::class, 'view']);
