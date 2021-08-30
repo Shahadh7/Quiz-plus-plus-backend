@@ -20,16 +20,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['cors'])->group(function () {
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login', [AuthController::class, 'login']);
 
-    Route::get('/subjects', [SubjectController::class, 'view']);
-    Route::get('/levels', [LevelController::class, 'view']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
-    Route::get('/exams/{id?}',[ExamController::class, 'view']);
-    Route::get('/sayings',[SayingController::class, 'view']);
-});
+Route::get('/subjects', [SubjectController::class, 'view']);
+Route::get('/levels', [LevelController::class, 'view']);
+
+Route::get('/exams/{id?}',[ExamController::class, 'view']);
+Route::get('/sayings',[SayingController::class, 'view']);
+
 
 
 
