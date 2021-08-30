@@ -11,7 +11,7 @@ class Quiz extends Model
 
     protected $table = "quizs";
 
-    protected $fillable = ['quiz'];
+    protected $fillable = ['quiz','exam_id'];
 
     public function exams() {
         return $this->belongsToMany(Exam::class);
