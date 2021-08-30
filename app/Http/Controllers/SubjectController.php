@@ -19,7 +19,7 @@ class SubjectController extends Controller
             'name' => 'required|string'
         ]);
 
-        Subject::where('subject_id', $id)->update(['name' => $data['name']]);
+        Subject::where('id', $id)->update(['name' => $data['name']]);
 
         return response(["message" => "Subject has been updated successfully."]);
     }
@@ -43,7 +43,7 @@ class SubjectController extends Controller
 
     public function destroy($id) {
 
-        Subject::where('subject_id', $id)->delete();;
+        Subject::where('id', $id)->delete();;
 
         return response(['message' => 'Subject has been deleted successfully'],200);
     }

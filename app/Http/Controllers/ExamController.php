@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Answer;
 use App\Models\Exam;
 use App\Models\Quiz;
-use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -21,6 +20,7 @@ class ExamController extends Controller
             'exam_duration'=> 'required',
             'exam_secret'=> 'required|string',
             'subject_id' => 'required',
+            'level_id' => 'required',
             'date' => 'date',
             'time' => 'required',
             'quiz_answers.*.quiz' => 'required|string',
@@ -37,6 +37,7 @@ class ExamController extends Controller
             'date' => $validatedExam['date'],
             'time' => $validatedExam ['time'],
             'subject_id' => $validatedExam['subject_id'],
+            'level_id' => $validatedExam['level_id'],
             'user_id' => Auth::user()->id,
             'slug' => $slug
         ]);
@@ -47,7 +48,8 @@ class ExamController extends Controller
         foreach ($quizzess_and_answers as $key => $value) {
             // dd($value['answers']);
             $quiz = Quiz::create([
-                'quiz'=> $value['quiz']
+                'quiz'=> $value['quiz'],
+                'exam_id'=> $examId
             ]);
             $exam->quizs()->attach($quiz);
             $quizId = $quiz->id;
@@ -68,12 +70,34 @@ class ExamController extends Controller
         ],200);
         
     }
-    public function view(Request $request,$id) {
+    public function view(Request $request,$id=null) {
 
-        $exam = Exam::with('quizs.answers',)->find($id);
+        if(is_null($id)) {
+            return response([
+                "message" => 'success',
+                "exams" => Exam::get()
+            ]);
+        }
+
+        $exam = Exam::with('quizs.answers')->find($id);
+        if(!$exam) return response([
+            "message" => "exam not found"
+        ],200);
+
         $exam->toArray();
 
         return response($exam,200);
+    }
+    public function destroy($id) {
+
+        $exam = Exam::find($id);
+        if(!$exam) return response([
+            "message" => "exam not found"
+        ],200);
+
+        $exam->delete();
+
+        return response(['message' => 'Exam has been deleted successfully'],200);
     }
 
 }
