@@ -26,14 +26,13 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/subjects', [SubjectController::class, 'view']);
 Route::get('/levels', [LevelController::class, 'view']);
-
 Route::get('/exams/{id?}',[ExamController::class, 'view']);
 Route::get('/sayings',[SayingController::class, 'view']);
 
 
 
 
-Route::middleware(['auth:sanctum','cors'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/subjects/create', [SubjectController::class, 'create']);
     Route::put('/subjects/{id}', [SubjectController::class, 'update']);
