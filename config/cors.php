@@ -15,11 +15,11 @@ return [
     |
     */
 
-    'paths' => ['api/*','api/exams/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://quizplusplus.netlify.app','https://safe-gorge-82079.herokuapp.com'],
+    'allowed_origins' => ['https://quizplusplus.netlify.app/','https://safe-gorge-82079.herokuapp.com'],
 
     'allowed_origins_patterns' => [],
 
