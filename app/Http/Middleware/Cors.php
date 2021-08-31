@@ -14,11 +14,12 @@ class Cors
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
-        header('Access-Control-Allow-Headers: Content-Type, Accept, Authorization, X-Requested-With, Application');
-        return $next($request);
+        return $next($request)
+            ->header('Access-Control-Allow-Origin: *')
+            ->header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS')
+            ->header('Access-Control-Allow-Headers', 'Accept, Content-Type, Authorization')
+            ->header("Access-Control-Allow-Credentials", "true");
     }
 }
