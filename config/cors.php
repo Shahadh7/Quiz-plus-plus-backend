@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://safe-gorge-82079.herokuapp.com'],
+    'allowed_origins' => ['https://quizplusplus.netlify.app'],
 
     'allowed_origins_patterns' => [],
 

@@ -39,6 +39,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/exams/{id}', [ExamController::class, 'destroy']);
 
     Route::put('/quizs/{id}', [QuizController::class, 'update']);
-
-    
+   
 });
