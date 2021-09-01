@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Client\Response;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -106,5 +107,12 @@ class AuthController extends Controller
         return response([
             'message' => 'Logged out'
         ]);
+    }
+
+    public function tokenValid(Request $request) {
+
+        if(Auth::user()->token == $request->token) {
+            return response()->json(["message" => "valid"]);
+        }
     }
 }

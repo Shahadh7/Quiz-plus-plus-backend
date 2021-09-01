@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://quizplusplus.netlify.app'],
+    'allowed_origins' => ['https://quizplusplus.netlify.app', 'http://localhost:8080'],
 
     'allowed_origins_patterns' => [],
 

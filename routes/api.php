@@ -30,6 +30,7 @@ Route::get('/exams/{id?}',[ExamController::class, 'view']);
 Route::get('/sayings',[SayingController::class, 'view']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/authcheck', [AuthController::class, 'tokenValid']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/subjects/create', [SubjectController::class, 'create']);
     Route::put('/subjects/{id}', [SubjectController::class, 'update']);
