@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SayingController;
 use Illuminate\Support\Facades\Route;
 
 /*

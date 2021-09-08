@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\RolesAndPermissionTrait;
 use App\Models\RandomNumber;
 use Illuminate\Http\Request;
 use Illuminate\Http\Client\Response;
@@ -15,30 +16,32 @@ use Nette\Utils\Random;
 
 class AuthController extends Controller
 {
+
+    use RolesAndPermissionTrait;
+
     public function register(Request $request) {
 
         //code segment to limit frequent registration request from same the ip address
-        $ipAddressess = DB::table('users')
-        ->where('created_at', '>', 
-            Carbon::now()->subHours(1)->toDateTimeString()
-        )->pluck('ip_address');
+        // $ipAddressess = DB::table('users')
+        // ->where('created_at', '>', 
+        //     Carbon::now()->subHours(1)->toDateTimeString()
+        // )->pluck('ip_address');
 
-        if($ipAddressess) {
-           foreach ($ipAddressess as $key => $value) {
-               if($value == $request->ip()) {
-                   return response([
-                       "message" => 'you are trying to create account frequently'
-                   ]);
-               }
-           } 
-        }
+        // if($ipAddressess) {
+        //    foreach ($ipAddressess as $key => $value) {
+        //        if($value == $request->ip()) {
+        //            return response([
+        //                "message" => 'you are trying to create account frequently'
+        //            ]);
+        //        }
+        //    } 
+        // }
 
         $data = $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|unique:users,email',
             'password' => 'required|string|confirmed',
-            'user_type' => 'required|numeric|min:1|max:3',
-            
+            'role' => 'required|string'
         ]);
         
         $randomSalt = Random::generate(20,"a-z0-9A-Z");
@@ -50,9 +53,10 @@ class AuthController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($saltedPassword),
-            'user_type' => $data['user_type'],
             'ip_address' => $request->ip()
         ]);
+
+        $this->assignRolesAndPermissions($user, $data['role']);
 
         RandomNumber::create([
             'random' => $randomSalt,
@@ -62,7 +66,8 @@ class AuthController extends Controller
         $token = $user->createToken('myauthtoken')->plainTextToken;
 
         $response = [
-            'user' => $user,
+            'name' => $user->name,
+            'email' => $user->email,
             'token' => $token
         ];
 
@@ -94,8 +99,9 @@ class AuthController extends Controller
 
         $response = [
             'message' => 'success',
+            'name' => $user->name,
+            'email' => $user->email,
             'token' => $token,
-            'user_type' => $user->user_type,
         ];
     
         return response($response,200);
@@ -109,10 +115,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function tokenValid(Request $request) {
-
-        if(Auth::user()->token == $request->token) {
-            return response()->json(["message" => "valid"]);
-        }
+    public function tokenValid() {
+        return response()->json(["message" => "valid"]);
     }
 }

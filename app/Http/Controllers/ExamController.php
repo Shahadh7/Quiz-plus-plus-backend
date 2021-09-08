@@ -13,6 +13,8 @@ class ExamController extends Controller
 {
     public function create(Request $request) {
 
+        if(!$request->user()->hasPermissionTo('create exams')) return response(["message" => "you do not have permission to create exams"]);
+
         // dd(Auth::user()->id);
 
         $validatedExam = $request->validate([
@@ -91,7 +93,7 @@ class ExamController extends Controller
         else if(is_null($id)) {
             return response([
                 "message" => 'success',
-                "exams" => Exam::with('levels')->get()
+                "exams" => Exam::with('levels')->orderBy('created_at')->get()
             ]);
         }
 
@@ -107,6 +109,7 @@ class ExamController extends Controller
     public function destroy($id) {
 
         $exam = Exam::find($id);
+
         if(!$exam) return response([
             "message" => "exam not found"
         ],200);
